@@ -12,6 +12,7 @@
 :root {
   --font-orbitron: 'Orbitron', sans-serif;
   --font-montserrat: 'Montserrat', sans-serif;
+  --font-ubuntu: 'Ubuntu', sans-serif;
 }
 
 .orbitron {
@@ -20,6 +21,15 @@
 
 .montserrat {
   font-family: var(--font-montserrat);
+}
+
+.ubuntu {
+  font-family: var(--font-ubuntu);
+}
+
+.ubuntu-italic {
+  font-family: var(--font-ubuntu);
+  font-style: italic;
 }
 
 :root {

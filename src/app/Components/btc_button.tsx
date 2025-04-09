@@ -4,7 +4,7 @@ import React from "react";
 
 interface StatItemProps {
   name: string;
-  value: any;
+  value: string | React.ReactNode;
   change?: string;
 }
 

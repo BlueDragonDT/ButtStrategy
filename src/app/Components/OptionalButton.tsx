@@ -7,9 +7,10 @@ interface OptionalButtonProps {
   names: string[];
   currentIndex: number;
   onSelect: (index: number) => void;
+  disabledIndices?: number[];
 }
 
-const OptionalButton: React.FC<OptionalButtonProps> = ({ names, currentIndex, onSelect }) => {
+const OptionalButton: React.FC<OptionalButtonProps> = ({ names, currentIndex, onSelect, disabledIndices = [] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [translateX, setTranslateX] = useState(0);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -78,12 +79,17 @@ const OptionalButton: React.FC<OptionalButtonProps> = ({ names, currentIndex, on
           {names.map((name, index) => (
             <button
               key={index}
-              className={`inline-block cursor-pointer text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2 font-semibold whitespace-nowrap ${
+              className={`inline-block text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2 font-semibold whitespace-nowrap ${
                 index === currentIndex
                   ? "text-[#FA660F] border-2 font-bold border-[#FA660F]"
                   : "bg-black text-white shadow-lg"
+              } ${
+                disabledIndices.includes(index)
+                  ? "opacity-50 cursor-not-allowed"
+                  : "cursor-pointer"
               }`}
-              onClick={() => onSelect(index)}
+              onClick={() => !disabledIndices.includes(index) && onSelect(index)}
+              disabled={disabledIndices.includes(index)}
             >
               {name}
             </button>

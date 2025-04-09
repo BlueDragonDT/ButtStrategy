@@ -1,12 +1,23 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { BsList } from "react-icons/bs";
-import { HiOutlineUser } from "react-icons/hi2";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HiOutlineUser } from "react-icons/hi";
+import Image from 'next/image';
 
 const Navbar: React.FC = () => {
   return (
     <div className="w-full h-20 bg-[#FA660F] flex flex-row justify-between items-center p-4 border-b-2 fixed top-0 left-0 z-10">
-      <div className=" md:flex md:justify-center md:items-center">
-        <div className="w-[200px] lg:w-[250px]">
-          <img src="/StrategyB.png" alt="logo" className="w-auto h-auto" />
+      <div className="md:flex md:justify-center md:items-center">
+        <div className="w-[200px] lg:w-[250px] ml-14">
+          <Image src="/StrategyB.png" alt="logo" width={176} height={52} />
+        </div>
+      </div>
+
+      {/* Never sell your buttcoin text */}
+      <div className="ubuntu-italic text-white pr-4 md:pr-8 flex flex-col items-end">
+        <div className="text-lg md:text-xl leading-tight">
+          <div>never sell</div>
+          <div>your buttcoin</div>
         </div>
       </div>
 
