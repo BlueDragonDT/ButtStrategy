@@ -1,5 +1,8 @@
 import { fetchWithErrorHandling } from './api';
 
+const BACKEND_URL = process.env.BACKEND_URL;
+const BACKEND_API_KEY = process.env.BACKEND_API_KEY;
+
 export interface Transaction {
   _id: string;
   timestamp: string; // Format: "MM/DD/YYYY HH:MM:SS"
@@ -34,7 +37,18 @@ export interface TransactionSummary {
  */
 export const fetchAllTransactions = async (): Promise<Transaction[]> => {
   try {
-    return await fetchWithErrorHandling("https://butt-be.onrender.com/getalltransactions");
+    if (!BACKEND_URL) {
+      throw new Error("BACKEND_URL is not defined");
+    }
+    if (!BACKEND_API_KEY) {
+      throw new Error("BACKEND_API_KEY is not defined");
+    }
+    
+    return await fetchWithErrorHandling(`${BACKEND_URL}/getalltransactions`, {
+      headers: {
+        'x-api-key': BACKEND_API_KEY
+      }
+    });
   } catch (error) {
     console.error("Failed to fetch transactions:", error);
     throw error;

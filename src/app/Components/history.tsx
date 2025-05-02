@@ -184,13 +184,13 @@ export default function ButtcoinHistory() {
       type: "line",
       id: "price-line",
       data: combinedData.map((item) => item.price),
-      label: "Butcoin Price",
+      label: "Buttcoin Price",
       color: "#FA660F",
       valueFormatter: (value: number | null, context: { dataIndex?: number }) => {
         if (value == null) return "N/A";
         const index = context?.dataIndex ?? 0;
         const date = combinedData[index]?.date || "Unknown Date";
-        return `Date: ${date}\nButcoin Price: $${value.toFixed(6)}`;
+        return `Date: ${date}\nButtcoin Price: $${value.toFixed(6)}`;
       },
     },
     {
@@ -252,7 +252,7 @@ export default function ButtcoinHistory() {
     <div style={{ width: "90%", backgroundColor: "black" }} className="text-white m-auto mt-8 relative">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 sm:gap-0">
         <Typography sx={{ color: "white", fontSize: 24, fontWeight: "bold" }}>
-          Butcoin Price
+          Buttcoin Price
         </Typography>
         
         {/* Date range selector */}

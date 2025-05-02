@@ -88,7 +88,7 @@ const Btc: React.FC = () => {
     yieldQtd
   } = buttcoinData;
 
-  const TotalUsdSpent = 131142; // For display purposes only, calculations use the service value
+  const TotalUsdSpent = 255687; // For display purposes only, calculations use the service value
 
   const stats = [
     { name: "Buttcoin Price", value: `$${Number(price).toFixed(4)}` },

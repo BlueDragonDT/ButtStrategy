@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { MdCurrencyBitcoin } from "react-icons/md";
-import { getProcessedTransactions, PurchaseData, TransactionSummary } from "../../services/transactionService";
+import { PurchaseData, TransactionSummary, Transaction } from "../../services/transactionService";
 import useSWR from 'swr';
 
 const Purchase: React.FC = () => {
@@ -24,7 +24,54 @@ const Purchase: React.FC = () => {
   // Using SWR for data fetching with caching and revalidation
   const { mutate: refreshData } = useSWR<TransactionSummary>(
     'transactions-summary',
-    getProcessedTransactions,
+    async () => {
+      const response = await fetch('/api/transactions');
+      if (!response.ok) {
+        throw new Error('Failed to fetch transactions');
+      }
+      const transactions = await response.json();
+      
+      // Process the transactions data
+      let total = 0;
+      let totalCost = 0;
+
+      const parsedData: PurchaseData[] = transactions.map((item: Transaction) => {
+        const amount = Number(item.amount) || 0;
+        const price = Number(item.price) || 0;
+        const balance = Number(item.balance) || 0;
+
+        const acquisitionCost = parseFloat((amount * price).toFixed(4));
+        total += amount;
+        totalCost += acquisitionCost;
+
+        return {
+          reported: item.timestamp,
+          buttcoinAcquisitions: amount,
+          avgbuttcoinCost: price,
+          acquisitionCost,
+          buttcoinHoldings: balance,
+          buttcoinSupply: parseFloat(((amount / 1_000_000_000) * 100).toFixed(4)),
+          type: item.type || "",
+          txHash: item.txhash || "",
+        };
+      });
+
+      // Sort by latest date
+      const sortedData = [...parsedData].sort(
+        (a, b) => new Date(b.reported).getTime() - new Date(a.reported).getTime()
+      );
+
+      const latestHoldings = sortedData[0]?.buttcoinHoldings ?? 0;
+      const averageAcquisitionCost = total ? totalCost / total : 0;
+
+      return {
+        transactions: sortedData,
+        totalButtcoinAcquisitions: total,
+        totalAcquisitionCost: totalCost,
+        averageAcquisitionCost,
+        latestHoldings
+      };
+    },
     {
       refreshInterval: 60 * 60 * 1000, // Refresh every hour
       revalidateOnFocus: false,

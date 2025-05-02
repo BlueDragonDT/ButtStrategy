@@ -3,7 +3,7 @@ const HELIUS_API_KEY = process.env.HELIUS_API_KEY || "";
 const WALLET_ADDRESS = process.env.NEXT_PUBLIC_WALLET_ADDRESS || "";
 const TOKEN_MINT_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_MINT_ADDRESS || "";
 const TOTAL_SUPPLY = 1000000000; // 1 billion
-const TOTAL_USD_SPENT = 131142;
+export const TOTAL_USD_SPENT = 255687;
 const QTD_BASE_PRICE = 0.0014; // Q1 2025 start price
 
 // Validate required environment variables

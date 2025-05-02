@@ -8,7 +8,10 @@ export const fetchWithErrorHandling = async (url: string, options?: RequestInit)
     const response = await fetch(url, options);
     
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json();
+      console.log("errorData", errorData);
+
+      throw new Error(`HTTP error! status: ${response.status}; url: ${url}`);
     }
     
     return await response.json();
